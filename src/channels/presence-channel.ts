@@ -60,10 +60,10 @@ export class PresenceChannel {
                 .clients((error, clients) => {
                     Log.info(`DEBUG: removeInactive - error - ${error} - members data: ` + JSON.stringify(members));
                     members = members || [];
-                    members = members.filter((member) => {
-                        Log.info(`DEBUG: removeInactive - member filtering:` + clients.indexOf(member.socketId) + " - member:" + JSON.stringify(member));
-                        return clients.indexOf(member.socketId) >= 0;
-                    });
+                    // members = members.filter((member) => {
+                    //     Log.info(`DEBUG: removeInactive - member filtering:` + clients.indexOf(member.socketId) + " - member:" + JSON.stringify(member));
+                    //     return clients.indexOf(member.socketId) >= 0;
+                    // });
                     Log.info(`DEBUG: removeInactive - after filtering members data: ` + JSON.stringify(members));
                     this.db.set(channel + ":members", members);
 
