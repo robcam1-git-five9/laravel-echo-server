@@ -136,7 +136,7 @@ export class PresenceChannel {
                     return true
                 });
                 Log.info(`DEBUG: leave - getMembers after filtering members data: ` + JSON.stringify(members));
-                Log.info(`DEBUG: leave - getMembers after filtering members data socket.id: ` + socket.id);
+                Log.info(`DEBUG: leave - getMembers after filtering members data socket: ` + JSON.stringify(socket));
                 this.db.set(channel + ":members", members);
 
                 if(member) {
@@ -146,6 +146,8 @@ export class PresenceChannel {
                             this.onLeave(channel, member);
                         }
                     });
+                } else {
+
                 }
             },
             (error) => Log.error(error)
