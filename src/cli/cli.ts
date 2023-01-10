@@ -227,6 +227,7 @@ export class Cli {
      */
     saveConfig(options): Promise<any> {
         const opts = {};
+        // save options.clients in redis
 
         Object.keys(options)
             .filter(k => {
