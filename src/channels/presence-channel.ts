@@ -94,6 +94,8 @@ export class PresenceChannel {
                         Log.info(`DEBUG: join - isMember - members data: ` + JSON.stringify(members));
                         members = members || [];
                         member.socketId = socket.id;
+                        // remove stale member
+                        members = members.filter(mem => mem.user_id != member.user_id); 
                         members.push(member);
                         Log.info(`DEBUG: join - isMember after added myself - members data: ` + JSON.stringify(members));
                         this.db.set(channel + ":members", members);
@@ -136,7 +138,6 @@ export class PresenceChannel {
                     return true
                 });
                 Log.info(`DEBUG: leave - getMembers after filtering members data: ` + JSON.stringify(members));
-                Log.info(`DEBUG: leave - getMembers after filtering members data socket: ` + JSON.stringify(socket));
                 this.db.set(channel + ":members", members);
 
                 if(member) {
