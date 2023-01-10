@@ -29,7 +29,6 @@ export class PresenceChannel {
         return new Promise((resolve, reject) => {
             this.getMembers(channel).then(
                 (members) => {
-                    Log.info(`DEBUG: isMember - 1 - ${channel} - members data: ` + JSON.stringify(members));
                     this.removeInactive(channel, members, member).then(
                         (members: any) => {
                             let search = members.filter(
@@ -58,13 +57,11 @@ export class PresenceChannel {
                 .of("/")
                 .in(channel)
                 .clients((error, clients) => {
-                    Log.info(`DEBUG: removeInactive - error - ${error} - members data: ` + JSON.stringify(members));
                     members = members || [];
                     // members = members.filter((member) => {
                     //     Log.info(`DEBUG: removeInactive - member filtering:` + clients.indexOf(member.socketId) + " - member:" + JSON.stringify(member));
                     //     return clients.indexOf(member.socketId) >= 0;
                     // });
-                    Log.info(`DEBUG: removeInactive - after filtering members data: ` + JSON.stringify(members));
                     this.db.set(channel + ":members", members);
 
                     resolve(members);
@@ -91,13 +88,11 @@ export class PresenceChannel {
             (is_member) => {
                 this.getMembers(channel).then(
                     (members) => {
-                        Log.info(`DEBUG: join - isMember - members data: ` + JSON.stringify(members));
                         members = members || [];
                         member.socketId = socket.id;
                         // remove stale member
                         members = members.filter(mem => mem.user_id != member.user_id);
                         members.push(member);
-                        Log.info(`DEBUG: join - isMember after added myself - members data: ` + JSON.stringify(members));
                         this.db.set(channel + ":members", members);
 
                         members = _.uniqBy(members.reverse(), "user_id");
@@ -124,7 +119,6 @@ export class PresenceChannel {
     leave(socket: any, channel: string): void {
         this.getMembers(channel).then(
             (members) => {
-                Log.info(`DEBUG: leave - getMembers before filtering members data: ` + JSON.stringify(members));
                 members = members || [];
 
                 let member
@@ -137,7 +131,6 @@ export class PresenceChannel {
 
                     return true
                 });
-                Log.info(`DEBUG: leave - getMembers after filtering members data: ` + JSON.stringify(members));
                 this.db.set(channel + ":members", members);
 
                 if(member) {
