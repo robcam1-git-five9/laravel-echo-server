@@ -95,7 +95,7 @@ export class PresenceChannel {
                         members = members || [];
                         member.socketId = socket.id;
                         // remove stale member
-                        members = members.filter(mem => mem.user_id != member.user_id); 
+                        members = members.filter(mem => mem.user_id != member.user_id);
                         members.push(member);
                         Log.info(`DEBUG: join - isMember after added myself - members data: ` + JSON.stringify(members));
                         this.db.set(channel + ":members", members);
