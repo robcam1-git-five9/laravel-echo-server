@@ -173,14 +173,14 @@ export class EchoServer {
      * Broadcast events to channels from subscribers.
      */
     broadcast(channel: string, message: any): boolean {
-        Log.info(`DEBUG 2: broadcast - message ` + JSON.stringify(message));
+        Log.info(`DEBUG 2: broadcast - message `);
         if (message.socket && this.find(message.socket)) {
             Log.info(`DEBUG 2: broadcast - message.socket ` + message.socket);
             Log.info(`DEBUG 2: broadcast - this.find(message.socket) ` + this.find(message.socket));
-            Log.info(`DEBUG 2: broadcast - toOthers ${channel} - ` + JSON.stringify(message));
+            Log.info(`DEBUG 2: broadcast - toOthers ${channel}`);
             return this.toOthers(this.find(message.socket), channel, message);
         } else {
-            Log.info(`DEBUG 2: broadcast - to all ${channel} - ` + JSON.stringify(message));
+            Log.info(`DEBUG 2: broadcast - to all ${channel}`);
             return this.toAll(channel, message);
         }
     }
