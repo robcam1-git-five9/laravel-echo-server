@@ -152,7 +152,7 @@ export class EchoServer {
     listen(): Promise<any> {
         return new Promise((resolve, reject) => {
             let subscribePromises = this.subscribers.map(subscriber => {
-                Log.info(`DEBUG 1: listen ` + JSON.stringify(subscriber));
+                Log.info(`DEBUG 1: listen `);
                 return subscriber.subscribe((channel, message) => {
                     return this.broadcast(channel, message);
                 });
