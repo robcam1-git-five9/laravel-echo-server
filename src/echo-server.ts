@@ -152,6 +152,7 @@ export class EchoServer {
     listen(): Promise<any> {
         return new Promise((resolve, reject) => {
             let subscribePromises = this.subscribers.map(subscriber => {
+                Log.info(`DEBUG 1: listen ` + JSON.stringify(subscriber));
                 return subscriber.subscribe((channel, message) => {
                     return this.broadcast(channel, message);
                 });
@@ -172,9 +173,14 @@ export class EchoServer {
      * Broadcast events to channels from subscribers.
      */
     broadcast(channel: string, message: any): boolean {
+        Log.info(`DEBUG 2: broadcast - message ` + JSON.stringify(message));
         if (message.socket && this.find(message.socket)) {
+            Log.info(`DEBUG 2: broadcast - message.socket ` + message.socket);
+            Log.info(`DEBUG 2: broadcast - this.find(message.socket) ` + this.find(message.socket));
+            Log.info(`DEBUG 2: broadcast - toOthers ${channel} - ` + JSON.stringify(message));
             return this.toOthers(this.find(message.socket), channel, message);
         } else {
+            Log.info(`DEBUG 2: broadcast - to all ${channel} - ` + JSON.stringify(message));
             return this.toAll(channel, message);
         }
     }

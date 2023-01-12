@@ -34,12 +34,12 @@ export class RedisSubscriber implements Subscriber {
      * @return {Promise<any>}
      */
     subscribe(callback): Promise<any> {
-
         return new Promise((resolve, reject) => {
             this._redis.on('pmessage', (subscribed, channel, message) => {
                 try {
+                    Log.info(`DEBUG 4: subscribe pmessage - before parse ` + message);
                     message = JSON.parse(message);
-
+                    Log.info(`DEBUG 5: subscribe pmessage - after parse ` + JSON.stringify(message));
                     if (this.options.devMode) {
                         Log.info("Channel: " + channel);
                         Log.info("Event: " + message.event);
