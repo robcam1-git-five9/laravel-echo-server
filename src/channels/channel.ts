@@ -54,7 +54,7 @@ export class Channel {
      */
     clientEvent(socket, data): void {
         try {
-            Log.info(`DEBUG 3: clientEvent - data before parse ` + data);
+            Log.info(`DEBUG 3: clientEvent - data before parse ` + JSON.stringify(data));
             data = JSON.parse(data);
             Log.info(`DEBUG 3: clientEvent - data after parse ` + JSON.stringify(data));
         } catch (e) {
