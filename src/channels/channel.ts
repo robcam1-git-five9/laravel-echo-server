@@ -54,11 +54,17 @@ export class Channel {
      */
     clientEvent(socket, data): void {
         try {
+            Log.info(`DEBUG 3: clientEvent - data before parse ` + data);
             data = JSON.parse(data);
+            Log.info(`DEBUG 3: clientEvent - data after parse ` + JSON.stringify(data));
         } catch (e) {
             data = data;
         }
-
+        Log.info(`DEBUG 3: clientEvent - data.event ` + data.event);
+        Log.info(`DEBUG 3: clientEvent - data.channel ` + data.channel);
+        Log.info(`DEBUG 3: clientEvent - isClientEvent ` + this.isClientEvent(data.event));
+        Log.info(`DEBUG 3: clientEvent - isPrivate ` + this.isPrivate(data.channel));
+        Log.info(`DEBUG 3: clientEvent - isInChannel ` + this.isInChannel(socket, data.channel));
         if (data.event && data.channel) {
             if (this.isClientEvent(data.event) &&
                 this.isPrivate(data.channel) &&
