@@ -154,6 +154,8 @@ export class EchoServer {
             let subscribePromises = this.subscribers.map(subscriber => {
                 Log.info(`DEBUG 1: listen `);
                 return subscriber.subscribe((channel, message) => {
+                    Log.info(`DEBUG 1: subscribe - channel: ${channel}`);
+                    Log.info(`DEBUG 1: subscribe - message: `+ JSON.stringify(message));
                     return this.broadcast(channel, message);
                 });
             });
