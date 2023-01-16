@@ -37,24 +37,13 @@ export class RedisSubscriber implements Subscriber {
         return new Promise((resolve, reject) => {
             this._redis.on('pmessage', (subscribed, channel, message) => {
                 try {
-                    Log.info(`DEBUG 4: subscribe pmessage - before parse ` + message);
-                    let isWorking = true;
-                    try {
-                        message = JSON.parse(message);
-                    } catch (e) {
-                        isWorking = false;
-                        if (this.options.devMode) {
-                            Log.info("error parsing message: " + message);
-                        }
+                    message = JSON.parse(message);
+
+                    if (this.options.devMode) {
+                        Log.info("Channel: " + channel);
+                        Log.info("Event: " + message.event);
                     }
-                    if (isWorking === true) {
-                        Log.info(`DEBUG 5: subscribe pmessage - after parse ` + JSON.stringify(message));
-                        if (this.options.devMode) {
-                            Log.info("Channel: " + channel);
-                            Log.info("Event: " + message.event);
-                        }
-                        callback(channel.substring(this._keyPrefix.length), message);
-                    }
+                    callback(channel.substring(this._keyPrefix.length), message);
                 } catch (e) {
                     if (this.options.devMode) {
                         Log.info("No JSON message");

@@ -40,8 +40,6 @@ export class Channel {
      */
     join(socket, data): void {
         if (data.channel) {
-            Log.info("DEBUG 0: join " + data.channel);
-            Log.info("DEBUG 0: isPrivate " + this.isPrivate(data.channel));
             if (this.isPrivate(data.channel)) {
                 this.joinPrivate(socket, data);
             } else {
@@ -56,17 +54,10 @@ export class Channel {
      */
     clientEvent(socket, data): void {
         try {
-            Log.info(`DEBUG 3: clientEvent - data before parse ` + JSON.stringify(data));
             data = JSON.parse(data);
-            Log.info(`DEBUG 3: clientEvent - data after parse ` + JSON.stringify(data));
         } catch (e) {
             data = data;
         }
-        Log.info(`DEBUG 3: clientEvent - data.event ` + data.event);
-        Log.info(`DEBUG 3: clientEvent - data.channel ` + data.channel);
-        Log.info(`DEBUG 3: clientEvent - isClientEvent ` + this.isClientEvent(data.event));
-        Log.info(`DEBUG 3: clientEvent - isPrivate ` + this.isPrivate(data.channel));
-        Log.info(`DEBUG 3: clientEvent - isInChannel ` + this.isInChannel(socket, data.channel));
         if (data.event && data.channel) {
             if (this.isClientEvent(data.event) &&
                 this.isPrivate(data.channel) &&
@@ -115,8 +106,6 @@ export class Channel {
     joinPrivate(socket: any, data: any): void {
         this.private.authenticate(socket, data).then(res => {
             socket.join(data.channel);
-            Log.info("DEBUG 0: joinPrivate " + data.channel);
-            Log.info("DEBUG 0: joinPrivate isPresence" + this.isPresence(data.channel));
             if (this.isPresence(data.channel)) {
                 var member = res.channel_data;
                 try {
