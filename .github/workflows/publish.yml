@@ -1,5 +1,6 @@
 name: Publish package to GitHub Packages
 on:
+    #todo add testing
     push:
         branches:
             - master
