@@ -8,6 +8,9 @@ on:
             - v*
 
 permissions: write-all
+
+env:
+    NPM_TOKEN: ${{ secrets.GITLAB_TOKEN }}
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,7 +24,8 @@ jobs:
           registry-url: 'https://npm.pkg.github.com'
           # Defaults to the user or organization that owns the workflow file
           scope: '@robcam1-git-five9'
+          cache: npm
      # - run: npm config set -- //npm.pkg.github.com/:_authToken=${{ secrets.PACKAGE_TOKEN }} ; \
-      - run: npm config set @robcam1-git-five9:registry https://npm.pkg.github.com ; \
+      #- run: npm config set @robcam1-git-five9:registry https://npm.pkg.github.com ; \
       - run: npm prepublish
       - run: npm publish
