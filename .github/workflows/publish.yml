@@ -12,6 +12,7 @@ jobs:
     permissions:
       contents: read
       packages: write
+      actions: read
     steps:
       - uses: actions/checkout@v4
       # Setup .npmrc file to publish to GitHub Packages
