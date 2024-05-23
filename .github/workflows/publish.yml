@@ -12,7 +12,6 @@ jobs:
     permissions:
       contents: read
       packages: write
-      actions: read
     steps:
       - uses: actions/checkout@v4
       # Setup .npmrc file to publish to GitHub Packages
@@ -22,9 +21,7 @@ jobs:
           registry-url: 'https://npm.pkg.github.com'
           # Defaults to the user or organization that owns the workflow file
           scope: '@robcam1-git-five9'
-      - run: npm config set -- //npm.pkg.github.com/:_authToken=$NODE_AUTH_TOKEN ; \
+      - run: npm config set -- //npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }} ; \
       - run: npm config set @robcam1-git-five9:registry https://npm.pkg.github.com ; \
       - run: npm prepublish
       - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
